@@ -1,0 +1,23 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+_ReSharper*/
+*.DotSettings.user
+
+## Ambiente
+.env
+*.env.local
+appsettings.Development.json
+
+## Docker
+docker/data/
+
+## Frontend
+frontend/node_modules/
+
+## OS
+.DS_Store
+Thumbs.db

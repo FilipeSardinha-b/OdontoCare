@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="OdontoCare.Api/OdontoCare.Api.csproj" />
+  <Project Path="OdontoCare.Tests/OdontoCare.Tests.csproj" />
+</Solution>
