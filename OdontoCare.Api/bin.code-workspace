@@ -1,0 +1,38 @@
+{
+	"folders": [
+		{
+			"path": "bin"
+		},
+		{
+			"path": "Configurations"
+		},
+		{
+			"path": "Controllers"
+		},
+		{
+			"path": "DTOs"
+		},
+		{
+			"path": "Middleware"
+		},
+		{
+			"path": "Models"
+		},
+		{
+			"path": "obj"
+		},
+		{
+			"path": "Properties"
+		},
+		{
+			"path": "Repositories"
+		},
+		{
+			"path": "Services"
+		},
+		{
+			"path": "Validators"
+		}
+	],
+	"settings": {}
+}

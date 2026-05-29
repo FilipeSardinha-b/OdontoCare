@@ -4,6 +4,7 @@ using OdontoCare.Api.Services;
 
 namespace OdontoCare.Api.Controllers;
 
+/// <summary>Endpoints de autenticação</summary>
 [ApiController]
 [Route("api/auth")]
 public class AuthController : ControllerBase
@@ -15,7 +16,6 @@ public class AuthController : ControllerBase
         _service = service;
     }
 
-    /// <summary>Registra um novo usuário no sistema</summary>
     [HttpPost("registrar")]
     public async Task<IActionResult> Registrar([FromBody] RegisterDto dto)
     {
@@ -30,7 +30,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    /// <summary>Autentica um usuário e retorna o token JWT</summary>
+    
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDto dto)
     {
