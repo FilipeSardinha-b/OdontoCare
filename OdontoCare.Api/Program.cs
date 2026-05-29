@@ -1,4 +1,5 @@
 using OdontoCare.Api.Configurations;
+using OdontoCare.Api.Middleware;
 using OdontoCare.Api.Repositories;
 using OdontoCare.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -7,19 +8,23 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// ── Configurações ──────────────────────────────────────────────
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings"));
 builder.Services.Configure<JwtSettings>(
     builder.Configuration.GetSection("JwtSettings"));
 
-
+// ── Repositórios ───────────────────────────────────────────────
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
-builder.Services.AddScoped<IPacienteService, PacienteService>();
 builder.Services.AddScoped<IConsultaRepository, ConsultaRepository>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+// ── Serviços ───────────────────────────────────────────────────
+builder.Services.AddScoped<IPacienteService, PacienteService>();
 builder.Services.AddScoped<IConsultaService, ConsultaService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
-
+// ── JWT ────────────────────────────────────────────────────────
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -42,7 +47,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+// CORS para o frontend acessar a API
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -51,9 +56,10 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// ── Pipeline ───────────────────────────────────────────────────
+app.UseMiddleware<ExceptionMiddleware>(); // tratamento global de erros
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OdontoCare API v1"));
-
 app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
