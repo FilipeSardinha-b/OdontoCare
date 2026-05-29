@@ -17,7 +17,7 @@ public class PacientesController : ControllerBase
         _service = service;
     }
 
-    /// <summary>Lista todos os pacientes com paginação e filtro</summary>
+ 
     [HttpGet]
     public async Task<IActionResult> ObterTodos(
         [FromQuery] int pagina = 1,
@@ -27,8 +27,6 @@ public class PacientesController : ControllerBase
         var resultado = await _service.ObterTodosAsync(pagina, tamanhoPagina, nome);
         return Ok(resultado);
     }
-
-    /// <summary>Busca um paciente pelo ID</summary>
     [HttpGet("{id}")]
     public async Task<IActionResult> ObterPorId(string id)
     {
@@ -37,7 +35,7 @@ public class PacientesController : ControllerBase
         return Ok(paciente);
     }
 
-    /// <summary>Cadastra um novo paciente</summary>
+
     [HttpPost]
     public async Task<IActionResult> Criar([FromBody] PacienteCreateDto dto)
     {
@@ -52,7 +50,6 @@ public class PacientesController : ControllerBase
         }
     }
 
-    /// <summary>Atualiza um paciente existente</summary>
     [HttpPut("{id}")]
     [Authorize(Roles = "admin")] // Apenas admin pode editar
     public async Task<IActionResult> Atualizar(string id, [FromBody] PacienteCreateDto dto)
@@ -62,7 +59,7 @@ public class PacientesController : ControllerBase
         return NoContent();
     }
 
-    /// <summary>Remove um paciente</summary>
+
     [HttpDelete("{id}")]
     [Authorize(Roles = "admin")] // Apenas admin pode deletar
     public async Task<IActionResult> Deletar(string id)
