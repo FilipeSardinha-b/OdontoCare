@@ -41,3 +41,46 @@ document.addEventListener('keydown', (e) => {
         if (!loginPage.classList.contains('hidden')) realizarLogin();
     }
 });
+// Cria um modal genérico reutilizável
+function criarModal(titulo, conteudo) {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.id = 'modalOverlay';
+    overlay.innerHTML = `
+        <div class="modal">
+            <div class="modal-header">
+                <h3>${titulo}</h3>
+                <button class="modal-close" onclick="fecharModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">${conteudo}</div>
+        </div>
+    `;
+    // Fecha ao clicar fora
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) fecharModal();
+    });
+    return overlay;
+}
+
+function fecharModal() {
+    const modal = document.getElementById('modalOverlay');
+    if (modal) modal.remove();
+}
+
+// Renderiza botões de paginação
+function renderPaginacao(containerId, paginaAtual, totalPaginas, callback) {
+    const div = document.getElementById(containerId);
+    if (!div || totalPaginas <= 1) {
+        if (div) div.innerHTML = '';
+        return;
+    }
+
+    let html = '';
+    for (let i = 1; i <= totalPaginas; i++) {
+        html += `<button class="${i === paginaAtual ? 'active' : ''}"
+            onclick="${callback.name}(${i})">${i}</button>`;
+    }
+    div.innerHTML = html;
+}
